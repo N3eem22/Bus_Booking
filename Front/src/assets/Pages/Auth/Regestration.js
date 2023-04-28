@@ -2,45 +2,61 @@ import React, { useState, useRef } from "react";
 import "../../Styles/Register.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Alert from 'react-bootstrap/Alert';
+import { setAuthUser } from "../../helpers/Storage";
 
 const RegestrationPage = () => {
-  const [errors, setError] = useState(null);
-  const [data, setData] = useState([]);
   const navigate = useNavigate();
-  const regestrationForm = useRef([]);
+  const [register, setRegister] = useState({
+    Email: "",
+    Password: "",
+    Phone:"",
+    loading:false,
+    err:[],
+  })
 
-  function regester(event) {
- 
+    //Login fun to make the page dousn't reload
+  const  registerFun =(event, register)=> {
+   
     event.preventDefault();
-    const user = {
-      email: regestrationForm.current[0].value,
-      password: regestrationForm.current[1].value,
-      phone: regestrationForm.current[2].value,
-    };
-    axios
-      .post("http://localhost:4000/auth/register", user)
-      .then((response) => {
-        console.log("registration response", response.data);
-        if (response.status === 200) {
-          navigate("/LoginPage");
+    setRegister({...register,loading:true});
+    
+    axios.post("http://localhost:4000/auth/register",{
+      email:register.Email,
+      password:register.Password,
+      phone:register.Phone
+    }).then(
+      (resp)=>{
+        setRegister({...register,loading:false ,err:[]})
+        setAuthUser(resp.data);
+        navigate("/AppointmentList");
         }
-      })
-      .catch((error) => {
-        setError(error.response.data);
-        console.log("registration failed", error.response.data);
+    ).catch((error) => {
+      console.log(error);
+      setRegister({
+        ...register,
+        loading: false,
+        err: error.response.data,
       });
-
-      console.log(errors);
-  }
-
+    });
+    console.log(register);
+    console.log(register.err);
+      };
+  
   return (
     <>
-   { errors && <div className="error-message">{errors["errors"][0].msg}</div>}
+   {
+    register.err.message&& 
+    <Alert variant="danger">{register.err.message} </Alert>}
 
       <div className="regetrationContainer">
         <span className="border-line">
           <h1>Registration</h1>
-          <form action="ProductList" onSubmit={regester}>
+          <form action="ProductList" onSubmit={(e) => {
+              registerFun(e, register);
+              
+            }}
+          >
             <div>
               <div>
                 <label htmlFor="Email">Email</label>
@@ -49,9 +65,8 @@ const RegestrationPage = () => {
                     id="Email"
                     type={"email"}
                     required
-                    ref={(ref) => {
-                      regestrationForm.current[0] = ref;
-                    }}
+                    value={register.Email}
+                   onChange={(e)=>{setRegister({...register,Email:e.target.value})}}
                   />
                 </div>
               </div>
@@ -62,9 +77,8 @@ const RegestrationPage = () => {
                     id="Password"
                     type={"password"}
                     required
-                    ref={(ref) => {
-                      regestrationForm.current[1] = ref;
-                    }}
+                    value={register.Password}
+                   onChange={(e)=>{setRegister({...register,Password :e.target.value})}}
                   />
                 </div>
               </div>
@@ -75,13 +89,12 @@ const RegestrationPage = () => {
                     id="Phone"
                     type={"tel"}
                     required
-                    ref={(ref) => {
-                      regestrationForm.current[2] = ref;
-                    }}
+                    value={register.Phone}
+                    onChange={(e)=>{setRegister({...register,Phone :e.target.value})}}
                   />
                 </div>
               </div>
-              <button>Register</button>
+              <button type="submit" disabled={register.loading==true}>Register</button>
               <h3>
                 already have an account?{" "}
                 <Link to={"/LoginPage"}>Login </Link>
