@@ -5,13 +5,12 @@ import App from "./App";
 //import ProductList from "./assets/products/ProductList";
 import NotFound from "./assets/Shared/NotFound";
 //import ProductInfo from "./assets/products/ProductInfoPage";
-import RegestrationPage from "../src/assets/Pages/Regestration";
-import LoginPage from "../src/assets/Pages/LoginPage";
+import RegestrationPage from "./assets/Pages/Auth/Regestration";
+import LoginPage from "./assets/Pages/Auth/LoginPage";
 import { Link } from 'react-router-dom';
-import AppointmentList from "./assets/Components/AppointmentsList";
+import AppointmentList from "./assets/Pages/Views/AppointmentsList";
 import AppointmentsInfo from "./assets/Components/AppointmentsInfo";
 import ContactUs from "./assets/Pages/ContactUs";
-import ManageApp from "./assets/Pages/Admin/ManageAppointments";
 import AllAppointments from "./dashboard//views/books/AllAppointments";
 import AddAppointment from "./dashboard/views/books/AddAppointment";
 import UpdateAppointment, { UpdateAppointmenyLoader } from "./dashboard/views/books/UpdateAppointment";
@@ -20,6 +19,10 @@ import Appointments from "./dashboard/views/books/Appointments";
 import AllTravelers from "./dashboard/views/Users/AllTravelers";
 import Traveler from "./dashboard/views/Users/Traveler";
 import AddTraveler from "./dashboard/views/Users/AddTraveler";
+import AppointmentRequests from "./dashboard/views/Requests/AppointmentRequests";
+import Requests from "./dashboard/views/Requests/Request";
+import RequestsHistory from "./dashboard/views/Requests/RequestsHistory";
+import UpdateRequests from "./dashboard/views/Requests/UpdateRequests";
 export const router = createBrowserRouter([
   {
     path: "",
@@ -55,10 +58,6 @@ export const router = createBrowserRouter([
       {
         path: "/Register",
         element: <RegestrationPage />,
-      },
-      {
-        path: "/ManageAppointments",
-        element: <ManageApp />,
       },
      
     ],
@@ -105,6 +104,25 @@ export const router = createBrowserRouter([
           },
         ]
       },
+        {
+            path: "requests",
+            element: <Requests />,
+            children: [
+              {
+                index: true,
+                element: <AppointmentRequests />,
+              },
+              {
+                path: "history_requests",
+                element: <RequestsHistory />
+              },
+              {
+                path: "update_request/:email",
+                loader: UpdateAppointmenyLoader,
+                element: <UpdateRequests />
+              },
+            ]
+        },
     ]
   },
  
