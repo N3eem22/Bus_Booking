@@ -67,7 +67,7 @@ input[type="number"] {
   width: 30%;
   align-content: center;
 }
-form{
+.formSearch{
   display: flex;
   flex-direction: row;
   align-items: baseline;

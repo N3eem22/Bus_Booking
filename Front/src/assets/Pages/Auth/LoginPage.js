@@ -1,13 +1,17 @@
 import React from "react";
 import "../../Styles/Login.css";
-//import image from "../images/Futuristic Circuit Board Background.jpg";
 import { react, useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import Alert from 'react-bootstrap/Alert';
 
 const LoginPage = ({onLogin}) => {
   
-  
+  const [userInfo, setUserInfo] = useState({
+    email: "",
+    Password: "",
+    loading:false,
+    err:[],
+  })
  
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Set initial state to false
 
@@ -29,10 +33,7 @@ const LoginPage = ({onLogin}) => {
   }
   
   const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState({
-    email: "",
-    Password: "",
-  });
+  ;
   const validateUser = (test) => {
     return navigate("/");
   };
@@ -40,6 +41,9 @@ const LoginPage = ({onLogin}) => {
 
 
   return (<>
+   <Alert className="p-2" variant="danger">
+          This is a simple lert
+        </Alert>
     <div className="regetrationContainer">
       <span className="border-line">
         <h1>Login</h1>

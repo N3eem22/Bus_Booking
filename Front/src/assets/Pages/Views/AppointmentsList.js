@@ -79,7 +79,7 @@ const AppointmentList = () => {
   return (
     <>
     <div className="Appointment-List">
-      <form onSubmit={handelSearch}>
+      <form className="formSearch" onSubmit={handelSearch}>
         
       <input 
         type="text" 
