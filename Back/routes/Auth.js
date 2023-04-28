@@ -10,9 +10,9 @@ const bcrypt = require("bcrypt");
 router.post(
   "/login",
   body("email").isEmail().withMessage("enter valid email"),
-  body("password")
+ /* body("password")
     .isLength({ min: 10, max: 20 })
-    .withMessage("password should be between (10,20)character"),
+    .withMessage("password should be between 10 and 20 characters"),*/
   async (req, res) => {
     try {
       //VALIDATION REQUEST {EXPRESS VALIDATOR}
@@ -32,11 +32,11 @@ router.post(
           msg: "email or password not found",
         });
       }
-      //COMPARE PASSWORD 
+      //COMPARE PASSWORD
       const checkPassword=await bcrypt.compare(req.body.password,user[0].password);
       if (checkPassword) {
        
-        delete user[0].password;
+     //   delete user[0].password;
         res.status(200).json(user[0]);
       }else{
         res.status(404).json({

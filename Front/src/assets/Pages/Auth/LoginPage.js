@@ -1,97 +1,104 @@
-import React from "react";
-import "../../Styles/Login.css";
-import { react, useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Alert from 'react-bootstrap/Alert';
-
-const LoginPage = ({onLogin}) => {
+  import React from "react";
+  import "../../Styles/Login.css";
+  import { react, useState, useEffect, useRef } from "react";
+  import { Link, useNavigate } from "react-router-dom";
+  import Alert from 'react-bootstrap/Alert';
+  import axios from 'axios'
+import { setAuthUser } from "../../helpers/Storage";
+  const LoginPage = () => {
+     const navigate = useNavigate();
+    const [userInfo, setUserInfo] = useState({
+      Email: "",
+      Password: "",
+      loading:false,
+      err:[],
+    })
   
-  const [userInfo, setUserInfo] = useState({
-    email: "",
-    Password: "",
-    loading:false,
-    err:[],
-  })
- 
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Set initial state to false
-
-  function handleLogin() {
-    setIsLoggedIn(true); // Update state to true upon successful login\n  }
-  }
-    //Login fun to make the page dousn't reload
-  function Login(event, userInfo) {
-    event.preventDefault();
-    console.log(userInfo);
-   if (userInfo.Username === "admin" && userInfo.Password === "12345") {
-    onLogin(); // Update parent component state
-    navigate("/ManageAppointments");
-    } else {
-      handleLogin(); // Update local state
-      validateUser(userInfo);
+      //Login fun to make the page dousn't reload
+    const  Login =(event, userInfo)=> {
+     
+      event.preventDefault();
+      setUserInfo({...userInfo,loading:true});
       
-    }
-  }
+      axios.post("http://localhost:4000/auth/login",{
+        email:userInfo.Email,
+        password:userInfo.Password,
+      }).then(
+        (resp)=>{
+          setUserInfo({...userInfo,loading:false ,err:[]})
+          setAuthUser(resp.data);
+          navigate("/AppointmentList");
+          }
+      ).catch((error) => {
+        console.log(error);
+        setUserInfo({
+          ...userInfo,
+          loading: false,
+          err: error.response.data,
+        });
+      });
+      console.log(userInfo);
+      console.log(userInfo.err);
+        };
+    
+
+
+
+    return (<>
+  {
+    userInfo.err.msg && 
+    <Alert variant="danger">{userInfo.err.msg} </Alert>}
   
-  const navigate = useNavigate();
-  ;
-  const validateUser = (test) => {
-    return navigate("/");
+    
+      <div className="regetrationContainer">
+        <span className="border-line">
+          <h1>Login</h1>
+          <form 
+            className="FormLogin"
+            action="ProductList"
+            onSubmit={(e) => {
+              Login(e, userInfo);
+              
+            }}
+          >
+            <div>
+              <label htmlFor="email">Email</label>
+              <div className="input-box">
+                <input
+                  id="email"
+                  type={"email"}
+                  value={userInfo.Email}
+                  required
+                  onChange={(event) => {
+                    setUserInfo({ ...userInfo, Email: event.target.value });
+                  }}
+                />
+              </div>
+            </div>
+            <div>
+              <label htmlFor="Password">Password</label>
+              <div className="input-box">
+                <input
+                  id="Password"
+                  type={"password"}
+                  value={userInfo.Password}
+                  required
+                  onChange={(event) => {
+                    setUserInfo({ ...userInfo, Password: event.target.value });
+                  }}
+                />
+              </div>
+            </div>
+
+            <button  type="submit" disabled={Login.loading==true}>Login</button>
+            <h3>
+              Don't have an account? <Link to={"/Register"}>Register </Link>
+            </h3>
+          </form>
+        </span>
+      </div>
+      </>
+    );
   };
 
-
-
-  return (<>
-   <Alert className="p-2" variant="danger">
-          This is a simple lert
-        </Alert>
-    <div className="regetrationContainer">
-      <span className="border-line">
-        <h1>Login</h1>
-        <form
-          action="ProductList"
-          onSubmit={(e) => {
-            Login(e, userInfo);
-            
-          }}
-        >
-          <div>
-            <label htmlFor="email">Email</label>
-            <div className="input-box">
-              <input
-                id="email"
-                type={"email"}
-                value={userInfo.email}
-                required
-                onChange={(event) => {
-                  setUserInfo({ ...userInfo, email: event.target.value });
-                }}
-              />
-            </div>
-          </div>
-          <div>
-            <label htmlFor="Password">Password</label>
-            <div className="input-box">
-              <input
-                id="Password"
-                type={"password"}
-                value={userInfo.Password}
-                required
-                onChange={(event) => {
-                  setUserInfo({ ...userInfo, Password: event.target.value });
-                }}
-              />
-            </div>
-          </div>
-
-          <button>Login</button>
-          <h3>
-            Don't have an account? <Link to={"/Register"}>Register </Link>
-          </h3>
-        </form>
-      </span>
-    </div>
-    </>
-  );
-};
-
-export default LoginPage;
+  export default LoginPage;
