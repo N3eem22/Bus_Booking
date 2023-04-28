@@ -32,7 +32,7 @@ const Sidebar = () => {
                                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9.75 12.25H14.25" />
                                         </svg>
                                     </div>
-                                    <Link to={"appointments/"} className="itemLink">Appointments</Link>
+                                    <Link to={"appointments"} className="itemLink">Appointments</Link>
                                 </div>
                             </div>
                             <div className="dropdown-container">
@@ -54,13 +54,14 @@ const Sidebar = () => {
                                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9.75 12.25H14.25" />
                                         </svg>
                                     </div>
-                                    <a href="#" className="itemLink">Appointment Requests</a>
+                                    <Link to={"requests"} className="itemLink">Appointment Requests</Link> 
+                                  
                                 </div>
                             </div>
                             <div className="dropdown-container">
                                 <ul className="sidebar-dropdown">
                                     <li>
-                                        <a href="#" className="sidebar-dropdown-item">Requests History</a>
+                                        <Link to={"requests/history_requests"} className="sidebar-dropdown-item">Requests History</Link> 
                                     </li>
                                 </ul>
                             </div>
@@ -83,13 +84,7 @@ const Sidebar = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="dropdown-container">
-                                <ul className="sidebar-dropdown">
-                                    <li>
-                                        <a href="#" className="sidebar-dropdown-item">Accounts History</a>
-                                    </li>
-                                </ul>
-                            </div>
+                          
                         </li>
                     </ul>
                 </div>
