@@ -1,5 +1,5 @@
 import React from "react";
-import "../Styles/Login.css";
+import "../../Styles/Login.css";
 //import image from "../images/Futuristic Circuit Board Background.jpg";
 import { react, useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";

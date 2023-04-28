@@ -63,7 +63,7 @@ export const data = [
     },
     {
         id: 7,
-         photo: 'https://s26162.pcdn.co/wp-content/uploads/2017/05/the-lord-of-the-rings-book-cover.jpg',
+        photo: 'https://s26162.pcdn.co/wp-content/uploads/2017/05/the-lord-of-the-rings-book-cover.jpg',
         from: 'cairo',
         to: 'abraham lincolin',
         date: 'Drama',
@@ -140,22 +140,22 @@ export const data = [
 
 export const users = [
     {
-       
+    
         email:'ahmed@gmail.com',
         phone:'01153304771'
     },
     {
-       
+    
         email:'ahmed@gmail.com',
         phone:'01153304771'
     },
     {
-       
+    
         email:'ahmed@gmail.com',
         phone:'01153304771'
     },
     {
-      
+    
         email:'ahmed@gmail.com',
         phone:'01153304771'
     },
@@ -165,15 +165,55 @@ export const users = [
         phone:'01153304771'
     },
     {
-      
+    
         email:'ahmed@gmail.com',
         phone:'01153304771'
     },
 
 ]
+export const requests =[
+    {
+        email:"ahmednaeem200393@gmail.com",
+        appointmentID:"20",
+        status:"pending"
+    },
+    {
+        email:"ahmednaeem200393@gmail.com",
+        appointmentID:"20",
+        status:"pending"
+    },
+    {
+        email:"ahmednaeem200393@gmail.com",
+        appointmentID:"20",
+        status:"pending"
+    },
+    {
+        email:"ahmednaeem200393@gmail.com",
+        appointmentID:"20",
+        status:"pending"
+    },
+    {
+        email:"ahmednaeem200393@gmail.com",
+        appointmentID:"20",
+        status:"pending"
+    },
+    {
+        email:"ahmed5454naeem200393@gmail.com",
+        appointmentID:"20",
+        status:"pending"
+    },
+]
 export const findById = ({ params }) => {
     const key = JSON.parse(params.id);
     const oldData = data.find((item) => item.id === key)
+    if (oldData) {
+        return oldData;
+    }
+    return null
+};
+export const findByEmail = ({ RequestInputs }) => {
+    const key = RequestInputs.email;
+    const oldData = data.find((item) => item.RequestInputs === key)
     if (oldData) {
         return oldData;
     }

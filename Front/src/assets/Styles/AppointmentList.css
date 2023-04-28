@@ -13,28 +13,13 @@
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 
   }
-  .Searchbars{
-    display: flex;
-    flex-direction: column;
-  }
- 
-.search {
-  background-position: 10px 12px;
-  width: 100%;
-  font-size: 16px;
-  padding: 12px 20px 12px 40px;
-  border: 1px solid #ddd;
-  margin-bottom: 12px;
-}
+
+  
 
 
 
-    label{
-      font-weight: bold;
-      margin-right: 1rem;
-      padding: 5px;
-      color: #222222;
-    }
+
+   
     
     .search, .filter{
       padding: 0.5rem;
@@ -60,4 +45,30 @@ input[type="number"] {
   font-size: 16px;
   border-radius: 5px;
   border: 1px solid #ccc;
+}
+
+.search {
+  background-position: 10px 12px;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+  border-radius: 5px;
+}
+
+.search:focus {
+  outline: none;
+  border-color: #22A39F;
+}
+.search-button{
+  cursor: pointer;
+  background-color: black;
+  width: 30%;
+  align-content: center;
+}
+form{
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
 }
