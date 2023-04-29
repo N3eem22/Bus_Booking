@@ -4,7 +4,7 @@
   import { Link, useNavigate } from "react-router-dom";
   import Alert from 'react-bootstrap/Alert';
   import axios from 'axios'
-import { setAuthUser } from "../../helpers/Storage";
+import { setAuthUser } from "../../helper/Storage";
   const LoginPage = () => {
      const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({

@@ -3,7 +3,7 @@ import "../../Styles/Register.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Alert from 'react-bootstrap/Alert';
-import { setAuthUser } from "../../helpers/Storage";
+import { setAuthUser } from "../../helper/Storage";
 
 const RegestrationPage = () => {
   const navigate = useNavigate();
