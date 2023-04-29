@@ -6,6 +6,7 @@
   import axios from 'axios'
 import { setAuthUser } from "../../helper/Storage";
   const LoginPage = () => {
+  
      const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({
       Email: "",

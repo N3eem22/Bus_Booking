@@ -1,5 +1,5 @@
 import { react, useState , useEffect,useRef} from "react";
-import "../Styles/Contact.css";
+import "../../Styles/Contact.css";
 const ContactUs = () => {
   //initial state
   /*const [contactUsForm, setContuctUsForm] = useState({

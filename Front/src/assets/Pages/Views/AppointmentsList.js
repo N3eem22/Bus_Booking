@@ -3,9 +3,12 @@ import AppointmentsInfo from "../../Components/AppointmentsInfo";
 import "../../Styles/AppointmentList.css";
 import axios from 'axios'
 import Spinner from 'react-bootstrap/Spinner';
+import { getAuthUser } from "../../helper/Storage";
+import Alert from 'react-bootstrap/Alert';
 
 
-const AppointmentList = () => {
+const AppointmentList = () => {  
+   const Auth =getAuthUser();
   const [appointments, setAppointments] = useState({
     loading: false,
     results: null,
@@ -13,30 +16,17 @@ const AppointmentList = () => {
     reload: 0
   });
   const [searchs,setSearch]=useState("");
-  const [queryp, setQueryp] = useState("");
-/*
-  const fetchData = async () => {
-    setAppointments({...appointments, loading: true});
-    try {
-      const response = await axios.get("http://localhost:4000/ManageAppointments",{params:{
-        search:search
-      }});
-      setAppointments({...appointments, results: response.data, loading: false, err: null});
-    } catch (error) {
-      setAppointments({...appointments, loading: false, err: "something went wrong"});
-    }
-  };
-  */
 
   useEffect(() => {
+
     setAppointments({...appointments, loading: true});
-    axios.get("http://localhost:4000/ManageAppointments",{params:{
-        search:searchs
+    axios.get(`http://localhost:4000/ManageAppointments/${searchs}`,{headers:{
+        token:Auth.token,
       }}).then((resp)=>{
         console.log(resp);
         setAppointments({...appointments, results: resp.data, loading: false, err: null});
     }).catch((err)=>{
-      setAppointments({...appointments, loading: false, err: "something went wrong"});
+      setAppointments({...appointments, loading: false, err: "Appointment Not Found"});
 
     })
   }, [appointments.reload]);
@@ -44,16 +34,19 @@ const AppointmentList = () => {
   const spasificApp = (id) => {
     console.log("We clicked on ", id);
     console.log(appointments);
+    console.log(Auth);
   };
 
   const displayApp = () => {
     if (appointments.loading) {
       return ( <Spinner animation="border" role="status">
-      <span className="visually-hidden">Loading...</span>
+      <span className="visually-hidden"></span>
     </Spinner>)
     }
     if (appointments.err) {
-      return <p>{appointments.err}</p>
+      return (
+        appointments.err && 
+        <Alert variant="danger">{appointments.err} </Alert>)
     }
     if (!appointments.results) {
       return null;

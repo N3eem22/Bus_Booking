@@ -8,7 +8,6 @@ const { body , validationResult} = require('express-validator');
 const AllApp ="SELECT * FROM appointments ";
 const moment =require('moment');
 const util = require("util"); //helper
-
 //  ADMIN [CREATE , UPDATE ,DELETE, LIST]
 //get all appointments [ ADMIN , USER ]
 router.get("/",

@@ -1,16 +1,12 @@
 import { createBrowserRouter, useNavigate } from "react-router-dom";
 import App from "./App";
-//import AboutPage from "./assets/Pages/aboutPage";
-//import ContactUs from "./assets/Pages/ContactUs";
-//import ProductList from "./assets/products/ProductList";
 import NotFound from "./assets/Shared/NotFound";
-//import ProductInfo from "./assets/products/ProductInfoPage";
 import RegestrationPage from "./assets/Pages/Auth/Regestration";
 import LoginPage from "./assets/Pages/Auth/LoginPage";
 import { Link } from 'react-router-dom';
 import AppointmentList from "./assets/Pages/Views/AppointmentsList";
 import AppointmentsInfo from "./assets/Components/AppointmentsInfo";
-import ContactUs from "./assets/Pages/ContactUs";
+import ContactUs from "./assets/Pages/Views/ContactUs";
 import AllAppointments from "./dashboard//views/books/AllAppointments";
 import AddAppointment from "./dashboard/views/books/AddAppointment";
 import UpdateAppointment, { UpdateAppointmenyLoader } from "./dashboard/views/books/UpdateAppointment";
