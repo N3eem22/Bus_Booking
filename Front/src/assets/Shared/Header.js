@@ -26,7 +26,7 @@ const Header = () => {
         Bus Booking{" "}
       </Link>
       <nav>
-        <Link to={"/ContactUs"}>History</Link>
+        <Link to={"/history"}>History</Link>
         <Link to={"/ContactUs"}>Contact US</Link>
 
         {!authenticated && (

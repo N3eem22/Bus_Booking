@@ -19,15 +19,33 @@ import AppointmentRequests from "./dashboard/views/Requests/AppointmentRequests"
 import Requests from "./dashboard/views/Requests/Request";
 import RequestsHistory from "./dashboard/views/Requests/RequestsHistory";
 import UpdateRequests from "./dashboard/views/Requests/UpdateRequests";
+import History from "./assets/Pages/Views/UserHistory";
+import Guest from "./assets/middleware/Guest";
+import Admin from "./assets/middleware/Admin";
 export const router = createBrowserRouter([
   {
     path: "",
     element: <App />,
-    children: [
+    children: 
+     [
       {
+        element:<Guest />,
+        children:[
+  {
         path: "",
-        element: <AppointmentList /> ,
+        element: <LoginPage /> ,
       },
+      ,{
+        path: "/LoginPage",
+        element: <LoginPage />,
+      },
+      {
+        path: "/Register",
+        element: <RegestrationPage />,
+      },
+        ]
+      },
+     
       {
         path: "/AppointmentList",
         element: <AppointmentList />,
@@ -36,7 +54,6 @@ export const router = createBrowserRouter([
         path: "/ContactUs",
         element: <ContactUs />,
       },
-      
       {
         
         path: "*",
@@ -46,25 +63,20 @@ export const router = createBrowserRouter([
         path: "/AppointmentsInfo/:id",
         element: <AppointmentsInfo />,
       },
-      
-      ,{
-        path: "/LoginPage",
-        element: <LoginPage />,
-      },
-      {
-        path: "/Register",
-        element: <RegestrationPage />,
-      },
-     
+       {
+        path: "/history",
+        element: <History />,
+      },    
     ],
   },
+
   {
     path: "dashboard",
-    element: <Dashboard />,
+    element:<Admin> <Dashboard /></Admin>,
     children: [
       {
         path: "appointments",
-        element: <Appointments />,
+        element:  <Appointments />,
         children: [
           {
             index: true,

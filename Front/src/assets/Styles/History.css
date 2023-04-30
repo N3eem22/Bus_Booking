@@ -1,0 +1,7 @@
+.custom_table{
+    background-color: aliceblue;
+    color: black;
+    justify-content: center;
+    border-collapse: collapse;
+    display: flex;
+}

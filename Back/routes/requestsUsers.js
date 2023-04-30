@@ -4,7 +4,6 @@ const { body, validationResult } = require("express-validator");
 const connection = require("../db/connection");
 const util = require("util"); //helper
 const authorized = require("../middleware/authorize");
-const adminAuth =require('../middleware/admin')
 //Traveler post request
 router.post("/", authorized, async (req, res) => {
   try {
@@ -15,13 +14,18 @@ router.post("/", authorized, async (req, res) => {
       token,
     ]);
     const email = emailResult[0].email;
-    const request={
+
+    const prevRequests = await query("select appointment_id from travelerappointment where traveler_id = ? and traveler_id = ?",[email,appointment_id]);
+    if (prevRequests) {
+      res.status(200).json([{msg:"you have sent a reuest before!"}]);
+    }else{ const request={
         appointment_id: appointment_id,
         request: "pending",
         traveler_id: email
     }
    await  query("INSERT INTO travelerappointment SET ?", [request])
-   res.status(200).json("request success");
+   res.status(200).json([{msg:"Appointment requested successfully."}]);}
+   
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal Server Error" });

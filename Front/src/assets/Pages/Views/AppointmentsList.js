@@ -32,9 +32,7 @@ const AppointmentList = () => {
   }, [appointments.reload]);
 
   const spasificApp = (id) => {
-    console.log("We clicked on ", id);
-    console.log(appointments);
-    console.log(Auth);
+    return id ;
   };
 
   const displayApp = () => {
@@ -69,6 +67,8 @@ const AppointmentList = () => {
     console.log(searchs);
    setAppointments({...appointments,reload:appointments.reload+1})
   }
+  
+
   return (
     <>
     <div className="Appointment-List">
