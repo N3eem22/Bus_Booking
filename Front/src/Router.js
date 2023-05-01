@@ -22,6 +22,7 @@ import UpdateRequests from "./dashboard/views/Requests/UpdateRequests";
 import History from "./assets/Pages/Views/UserHistory";
 import Guest from "./assets/middleware/Guest";
 import Admin from "./assets/middleware/Admin";
+import RequestsHistoryUser from "./assets/Pages/Views/RequestsHistoryUser";
 export const router = createBrowserRouter([
   {
     path: "",
@@ -49,6 +50,10 @@ export const router = createBrowserRouter([
       {
         path: "/AppointmentList",
         element: <AppointmentList />,
+      },
+      {
+        path: "/requestHistory",
+        element: <RequestsHistoryUser />,
       },
       {
         path: "/ContactUs",
