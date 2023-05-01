@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MDBDataTable } from 'mdbreact';
+import DataTable from 'react-data-table-component';
 import "../../Styles/History.css"
 import axios from 'axios'
 import { getAuthUser } from '../../helper/Storage';
@@ -56,9 +57,9 @@ useEffect(() => {
   return (
     
     <MDBDataTable
-      striped
-      bordered
-      sortable
+    responsive
+    bordered
+    hover
       data={data}
       className="custom_table m-5"
     />

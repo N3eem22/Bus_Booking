@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import AppointmentList from "./assets/Pages/Views/AppointmentsList";
 import AppointmentsInfo from "./assets/Components/AppointmentsInfo";
 import ContactUs from "./assets/Pages/Views/ContactUs";
-import AllAppointments from "./dashboard//views/books/AllAppointments";
+import AllAppointments from "./dashboard/views/books/AllAppointments";
 import AddAppointment from "./dashboard/views/books/AddAppointment";
 import UpdateAppointment, { UpdateAppointmenyLoader } from "./dashboard/views/books/UpdateAppointment";
 import Dashboard from "./dashboard/Dashboard";
