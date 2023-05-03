@@ -1,11 +1,28 @@
 import DataTable from 'react-data-table-component';
 import { Link } from 'react-router-dom';
-import { users } from '../../helper/helper';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../../styling/dashboard.css'
+import { getAuthUser } from '../../../assets/helper/Storage';
+import axios from 'axios';
 
 const AllTravelers =()=>{
-const [currUsers,setUsers]=useState(users);
+    const Auth = getAuthUser();
+const [currUsers,setUsers]=useState({ // rename state variable to avoid conflict
+    loading: false,
+    results: [],
+    err: [],
+    reload: 0
+  });
+  useEffect(() => {
+    setUsers({...currUsers, loading: true}); // fix typo
+    axios.get("http://localhost:4000/adminPage", {headers:{
+      token: Auth.token,
+    }}).then((resp) => {
+        setUsers({...currUsers, results: resp.data, loading: false, err: null});
+    }).catch((err) => {
+        setUsers({...currUsers, loading: false, err: "Appointment Not Found"});
+    })
+  }, []);
 const columns = [
     {
         name: 'email',
@@ -75,7 +92,7 @@ const deleteTraveler = (param) => {
             </div>
             <DataTable
                 columns={columns}
-                data={currUsers}/>
+                data={currUsers.results}/>
     </>);
 }
 export default AllTravelers;

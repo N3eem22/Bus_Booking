@@ -7,7 +7,7 @@ const Admin = ()=>{
     const Auth = getAuthUser();
 return<>
 {
-    (!Auth && Auth.type=="admin")? <Outlet/> : <Navigate to={"/AppointmentList"}/>
+    (!Auth)? <Outlet/> : <Navigate to={""}/>
 }
     </>
 

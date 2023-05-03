@@ -15,8 +15,8 @@ router.post("/", authorized, async (req, res) => {
     ]);
     const email = emailResult[0].email;
 
-    const prevRequests = await query("select appointment_id from travelerappointment where traveler_id = ? and traveler_id = ?",[email,appointment_id]);
-    if (prevRequests) {
+    const prevRequests = await query("select * from travelerappointment where traveler_id = ? and appointment_id = ?",[email,appointment_id]);
+    if (prevRequests.length > 0) {
       res.status(200).json([{msg:"you have sent a reuest before!"}]);
     }else{ const request={
         appointment_id: appointment_id,

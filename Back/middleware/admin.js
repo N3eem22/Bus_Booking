@@ -9,8 +9,8 @@ const adminAuth=async (req,res,next)=>{
   const query = util.promisify(connection.query).bind(connection); 
 
   const admin =await query("select * from user where token = ?",[token]);
-
-   if (admin[0].type == "admin" && admin[0]) {
+  const isAdmin = admin[0].type;
+   if (admin && isAdmin === "admin") {
      next();
    } else {
      res.statuscode=404;

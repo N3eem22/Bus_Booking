@@ -28,7 +28,6 @@ import { setAuthUser } from "../../helper/Storage";
         (resp)=>{
           setUserInfo({...userInfo,loading:false ,err:[]})
           setAuthUser(resp.data);
-          navigate("/AppointmentList");
           }
       ).catch((error) => {
         console.log(error);

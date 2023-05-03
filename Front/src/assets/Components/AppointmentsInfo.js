@@ -18,8 +18,11 @@ const AppointmentsInfo = (props)=>{
             headers: {
                token: Auth.token
             }
-         }).then((response)=>{ const message =response.data[0].msg;
-         setRequestStatus(message)}).catch ((err)=> {
+         }).then((response)=>{ 
+
+         setRequestStatus(response.data[0].msg);
+         console.log(response);
+      }).catch ((err)=> {
          console.error(err);
          setRequestStatus('Failed to request appointment. Please try again later.')});
       

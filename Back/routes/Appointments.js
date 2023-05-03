@@ -17,7 +17,7 @@ async (req,res)=>{
       if (err) {
         console.log(err);
       }
-        res.json(results);
+        res.status(200).json(results);
     });
 })
 

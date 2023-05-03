@@ -1,27 +1,45 @@
     import DataTable from 'react-data-table-component';
     import { Link } from 'react-router-dom';
-    import { requests } from '../../helper/helper';
-    import { useState } from 'react';
+    import { useEffect, useState } from 'react';
     import '../../styling/dashboard.css'
+import { getAuthUser } from '../../../assets/helper/Storage';
+import axios from 'axios';
 
     const AppointmentRequests =()=>{
-    const [currRequests,setRequests]=useState(requests);
+    const Auth = getAuthUser();
+    
+    const [currRequests,setRequests]=useState({ // rename state variable to avoid conflict
+        loading: false,
+        results: [],
+        err: [],
+        reload: 0
+      });
+    useEffect(() => {
+        setRequests({...currRequests, loading: true}); // fix typo
+        axios.get("http://localhost:4000/requestAdmin", {headers:{
+          token: Auth.token,
+        }}).then((resp) => {
+         setRequests({...currRequests, results: resp.data, loading: false, err: null});
+        }).catch((err) => {
+            setRequests({...currRequests, loading: false, err: "Appointment Not Found"});
+        })
+      }, []);
     const columns = [
         {
             name: 'email',
-            selector: row => row.email,
+            selector: row => row.traveler_id,
             sortable: true,
             center: true
         },
         {
             name: 'appointment',
-            selector: row => row.appointmentID,
+            selector: row => row.appointment_id,
             sortable: true,
             center: true
         },
         {
             name: 'status',
-            selector: row => row.status,
+            selector: row => row.request,
             sortable: true,
             center: true
         },
@@ -53,7 +71,7 @@
                 </div>
                 <DataTable
                     columns={columns}
-                    data={currRequests}/>
+                    data={currRequests.results}/>
         </>);
     }
     export default AppointmentRequests;

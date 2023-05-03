@@ -55,8 +55,8 @@ router.post(
   "/register",
   body("email").isEmail().withMessage("enter valid email"),
   body("password")  
-    .isLength({ min: 10, max: 20 })
-    .withMessage("password should be between (10,20)character"),
+    .isLength({ min: 5, max: 12 })
+    .withMessage("password should be between (5,12)character"),
   body("phone")
     .isLength({ min: 11, max: 11 })
     .withMessage("This phone number isn't valid"),
