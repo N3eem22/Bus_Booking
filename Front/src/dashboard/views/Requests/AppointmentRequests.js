@@ -51,18 +51,19 @@ import axios from 'axios';
     ];
 
     const updateRequest = (param) => {
-        const handleDelete = () => {
-        setRequests(currRequests.filter((item) => item.email !== param.email));
-        };
-    
-        return (
-        <>
-            <Link to={`update_request/${param.email}`} className='UpdateBtn' onClick={handleDelete}>
-            update
-            </Link>
-        </>
-        );
-    };
+      const handleDelete = () => {
+          setRequests(currRequests.filter((item) => item.id !== param.id));
+      };
+      return (
+          <>
+              <Link to={{
+                  pathname: `update_request/${param.id}`,
+              }} className='UpdateBtn' onClick={handleDelete}>
+                  update
+              </Link>
+          </>
+      );
+  };
 
         return(<>
         <div className="title-datatable">

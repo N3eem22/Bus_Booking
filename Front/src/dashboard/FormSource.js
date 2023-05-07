@@ -44,25 +44,23 @@ export const travelerInputs = [
         placeholder: "",
     },
     {
+        id:2,
         label: "phone",
         type: "number",
         placeholder: "",
     },
-    {id:2,
+    {id:3,
         label: "password",
         type: "password",
         placeholder: "",
     },
+];
+export const requestInputs = [
     {
-        id:3,
-        label: "status",
+        id:1,
+        label: "request",
         type: "text",
-        placeholder: "12:30:20",
+        placeholder: "pending",
     },
-    {
-        id:4,
-        label: "type",
-        type: "text",
-        placeholder: "",
-    },
+    
 ];

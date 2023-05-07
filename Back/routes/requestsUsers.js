@@ -31,7 +31,6 @@ router.post("/", authorized, async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 })  
-
 //view requests by user
   router.get("/",authorized, async (req, res) => {
     try{
@@ -39,7 +38,6 @@ router.post("/", authorized, async (req, res) => {
     const query = util.promisify(connection.query).bind(connection);
     const emailResult = await query("SELECT email FROM user WHERE token = ?", [token]);
     const email = emailResult[0].email;
-    const results = await query("select * from search where user_email = ?", [email]);
     const requests = await query("SELECT * FROM travelerappointment WHERE traveler_id = ?",[email]);
     res.status(202).json(requests);
     }

@@ -66,11 +66,7 @@ const Sidebar = () => {
                                 </div>
                             </div>
                             <div className="dropdown-container">
-                                <ul className="sidebar-dropdown">
-                                    <li>
-                                        <Link to={"requests/history_requests"} className="sidebar-dropdown-item">Requests History</Link> 
-                                    </li>
-                                </ul>
+                               
                             </div>
                         </li>
                         <li className>

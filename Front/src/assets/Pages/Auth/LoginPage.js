@@ -4,9 +4,9 @@
   import { Link, useNavigate } from "react-router-dom";
   import Alert from 'react-bootstrap/Alert';
   import axios from 'axios'
-import { setAuthUser } from "../../helper/Storage";
+import { getAuthUser, setAuthUser } from "../../helper/Storage";
   const LoginPage = () => {
-  
+ const  auth =getAuthUser();
      const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({
       Email: "",
@@ -28,6 +28,13 @@ import { setAuthUser } from "../../helper/Storage";
         (resp)=>{
           setUserInfo({...userInfo,loading:false ,err:[]})
           setAuthUser(resp.data);
+          console.log(resp.data);
+        if (resp.data.type == "admin") {
+        navigate("/dashboard");
+
+      } else {
+        navigate("/appointmentList")
+      }
           }
       ).catch((error) => {
         console.log(error);
@@ -39,6 +46,7 @@ import { setAuthUser } from "../../helper/Storage";
       });
       console.log(userInfo);
       console.log(userInfo.err);
+    
         };
     
 

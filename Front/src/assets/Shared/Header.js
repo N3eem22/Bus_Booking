@@ -26,9 +26,15 @@ const Header = () => {
         Bus Booking{" "}
       </Link>
       <nav>
-      <Link to={"/AppointmentList"}>Appointments List</Link>
+     
+      {
+        authenticated && (<>
+           <Link to={"/AppointmentList"}>Appointments List</Link>
         <Link to={"/history"}>History</Link>
         <Link to={"/requestHistory"}>Requests</Link>
+        </>
+        )
+      }
 
         {!authenticated && (
           <>

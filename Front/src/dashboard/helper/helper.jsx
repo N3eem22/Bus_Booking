@@ -213,7 +213,7 @@ export const findById = ({ params }) => {
 };
 export const findByEmail = ({ RequestInputs }) => {
     const key = RequestInputs.email;
-    const oldData = data.find((item) => item.RequestInputs === key)
+     const oldData = data.find((item) => item.RequestInputs === key)
     if (oldData) {
         return oldData;
     }

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import '../../styling/dashboard.css'
 import { getAuthUser } from '../../../assets/helper/Storage';
 import axios from 'axios';
+import UpdateAppointment from '../Appointments/UpdateAppointment';
 
 const AllTravelers =()=>{
     const Auth = getAuthUser();

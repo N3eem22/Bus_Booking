@@ -3,7 +3,6 @@
   import NotFound from "./assets/Shared/NotFound";
   import RegestrationPage from "./assets/Pages/Auth/Regestration";
   import LoginPage from "./assets/Pages/Auth/LoginPage";
-  import { Link } from 'react-router-dom';
   import AppointmentList from "./assets/Pages/Views/AppointmentsList";
   import AppointmentsInfo from "./assets/Components/AppointmentsInfo";
   import ContactUs from "./assets/Pages/Views/ContactUs";
@@ -17,12 +16,12 @@
   import AddTraveler from "./dashboard/views/Users/AddTraveler";
   import AppointmentRequests from "./dashboard/views/Requests/AppointmentRequests";
   import Requests from "./dashboard/views/Requests/Request";
-  import RequestsHistory from "./dashboard/views/Requests/RequestsHistory";
   import UpdateRequests from "./dashboard/views/Requests/UpdateRequests";
   import History from "./assets/Pages/Views/UserHistory";
   import Guest from "./assets/middleware/Guest";
   import Admin from "./assets/middleware/Admin";
   import RequestsHistoryUser from "./assets/Pages/Views/RequestsHistoryUser";
+import TravelerRequest from "./dashboard/views/Users/TravelerRequest";
 
   export const router = createBrowserRouter([
     {
@@ -30,11 +29,14 @@
       element: <App />,
       children: [
         {
-          path: "",
+          path: "/",
+          element: <AppointmentList />,
+        },
+        {
           element: <Guest />,
           children:[
             {
-              path: "",
+              path: "/LoginPage",
               element: <LoginPage />,
             },
             {
@@ -43,10 +45,7 @@
             }
           ]
         },
-        {
-          path: "/AppointmentList",
-          element: <AppointmentList />,
-        },
+       
         {
           path: "/requestHistory",
           element: <RequestsHistoryUser />,
@@ -70,15 +69,10 @@
       
       ],
     },
-    {
-      
+   
+        {
         path: "/dashboard",
-        element: (
-    
-                  <Dashboard />
-                
-                
-        ),
+        element:  <Dashboard />,
         children: [
           {
             path: "appointments",
@@ -116,6 +110,10 @@
                 loader: UpdateAppointmenyLoader,
                 element: <UpdateAppointment />,
               },
+              {
+                path:"traveler_request/:email",
+                element:<TravelerRequest />
+              }
             ],
           },
           {
@@ -127,11 +125,7 @@
                 element: <AppointmentRequests />,
               },
               {
-                path: "history_requests",
-                element: <RequestsHistory />,
-              },
-              {
-                path: "update_request/:email",
+                path: "update_request/:id",
                 loader: UpdateAppointmenyLoader,
                 element: <UpdateRequests />,
               },
@@ -139,5 +133,6 @@
           },
         ],
       },
+     
     
   ]);

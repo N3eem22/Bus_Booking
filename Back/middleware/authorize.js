@@ -13,6 +13,7 @@ const authoried =async (req,res,next)=>{
         res.status(403).json({
             msg : "you are not aythorized to acess this rout !"
         });
+        return  
     }
 }   
 module.exports= authoried;
