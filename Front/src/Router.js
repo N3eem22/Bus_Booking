@@ -22,6 +22,7 @@
   import Admin from "./assets/middleware/Admin";
   import RequestsHistoryUser from "./assets/Pages/Views/RequestsHistoryUser";
 import TravelerRequest from "./dashboard/views/Users/TravelerRequest";
+import UpdateTraveler from "./dashboard/views/Users/UpdateTraveler";
 
   export const router = createBrowserRouter([
     {
@@ -74,6 +75,7 @@ import TravelerRequest from "./dashboard/views/Users/TravelerRequest";
         path: "/dashboard",
         element:  <Dashboard />,
         children: [
+
           {
             path: "appointments",
             element: <Appointments />,
@@ -106,9 +108,8 @@ import TravelerRequest from "./dashboard/views/Users/TravelerRequest";
                 element: <AddTraveler />,
               },
               {
-                path: "update_appointment/:id",
-                loader: UpdateAppointmenyLoader,
-                element: <UpdateAppointment />,
+                path: "update_traveler/:email",
+                element: <UpdateTraveler />,
               },
               {
                 path:"traveler_request/:email",
@@ -132,7 +133,7 @@ import TravelerRequest from "./dashboard/views/Users/TravelerRequest";
             ],
           },
         ],
-      },
+        },
      
     
   ]);

@@ -57,6 +57,7 @@ const AppointmentList = () => {
           id={data.id}
           data={data}
           spasificApp={spasificApp}
+    
         />
       );
     });

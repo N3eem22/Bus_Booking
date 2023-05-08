@@ -5,6 +5,7 @@ import { getAuthUser } from "../../assets/helper/Storage";
 import Alert from 'react-bootstrap/Alert';
 
 const AddUser = ({ inputs, title }) => {
+  
   const [traveler, setTraveler] = useState({
     email: "",
     phone: "",

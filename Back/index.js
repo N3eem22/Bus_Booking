@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 //ALOW HTTP TO COMMUNICATE WITH LOCAL HOST
 const cors = require("cors");
+app.use(express.static("Uploads"));
 app.use(cors());
 //GLPAL MIDDLEWARE
 app.use(express.json());

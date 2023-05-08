@@ -11,7 +11,7 @@ const Admin = ()=>{
     } else if (authUser.type == "admin") {
         return <Navigate to="/dashboard" />;
     } else {
-        return <Navigate to="/AppointmentList" />;
+        return <Navigate to="/" />;
     }
 }
 export default Admin;

@@ -31,7 +31,7 @@ export const bookInputs = [
     },
     {
         id: 6,
-        label: "Max number of travelers",
+        label: " Max_num_of_travelers",
         type: "number",
         placeholder: "50",
     },
@@ -64,3 +64,18 @@ export const requestInputs = [
     },
     
 ];
+export const InputsUpdateUser = [
+    {
+        id:1,
+        label: "phone",
+        type: "text",
+        placeholder: "",
+    },
+    {
+        id:1,
+        label: "password",
+        type: "password",
+        placeholder: "",
+    },
+   
+]

@@ -1,18 +1,51 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import '../styling/UpdateForm.css'
+import axios from 'axios';
+import { getAuthUser } from '../../assets/helper/Storage';
+import { useParams } from 'react-router-dom';
 
-const UpdateForm = ({ oldData ,inputs , formTitle }) => {
-    const [file, setFile] = useState(oldData.photo);
+const UpdateForm = ({ inputs , formTitle }) => {
+    const Auth =getAuthUser();
+    const { id } = useParams();
+    const [file, setFile] = useState("");
     const [fileUpdated, setFileUpdated] = useState(false);
-
-    inputs[0] = {...inputs[0], oldData: oldData.from}
-    inputs[1] = {...inputs[1], oldData: oldData.to}
-    inputs[2] = {...inputs[2], oldData: oldData.date}
-    inputs[3] = {...inputs[3], oldData: oldData.time}
-    inputs[4] = {...inputs[4], oldData: oldData.price}
-    inputs[5] = {...inputs[5], oldData: oldData.maxNumberOfTravelers}
-
+    const [appointment, setAppointment] = useState({
+        From_location:"",
+        To_location:"",
+        Price:"",
+        Date:"",
+        Time:"",
+        Max_num_of_travelers:"", // corrected label
+    });
+    const [currRequests, setRequests] = useState({
+        loading: false,
+        results: [],
+        err: [],
+        reload: 0,
+      });
+      useEffect(() => {
+        setRequests({ ...currRequests, loading: true });
+        axios
+          .get(`http://localhost:4000/ManageAppointments/id/${id}`, {
+            headers: {
+              token: Auth.token,
+            },
+          })
+          .then((resp) => {
+            setRequests({
+              ...currRequests,
+              results: resp.data,
+              loading: false,
+              err: null,
+            });
+            console.log(resp);
+          })
+          .catch((err) => {
+            console.log(err);
+            setRequests({ ...currRequests, loading: false, err: err });
+          });
+      }, []);
     return (
         <div className="new">
             <div className="newContainer">
@@ -39,6 +72,7 @@ const UpdateForm = ({ oldData ,inputs , formTitle }) => {
                                 <input
                                     type="file"
                                     id="file"
+                                
                                     onChange={(e) => {setFile(e.target.files[0]);setFileUpdated(true)}}
                                     style={{ display: "none" }}
                                 />
@@ -47,7 +81,7 @@ const UpdateForm = ({ oldData ,inputs , formTitle }) => {
                             {inputs.map((input) => (
                                 <div className="formInput" key={input.id}>
                                     <label>{input.label}</label>
-                                    <input type={input.type} defaultValue={input.oldData} placeholder={input.placeholder} />
+                                    <input type={input.type} defaultValue={currRequests.results[input.label]} placeholder={input.placeholder} />
                                 </div>
                             ))}
                             <button>Send</button>

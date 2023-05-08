@@ -33,7 +33,7 @@ import { getAuthUser, setAuthUser } from "../../helper/Storage";
         navigate("/dashboard");
 
       } else {
-        navigate("/appointmentList")
+        navigate("/")
       }
           }
       ).catch((error) => {

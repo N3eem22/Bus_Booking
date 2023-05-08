@@ -15,7 +15,7 @@ const UpdateAppointment = () => {
 
     return (
         <div>
-            <UpdateForm oldData={oldData} inputs={bookInputs} formTitle={"Update Apppointment"} />
+            <UpdateForm  inputs={bookInputs} formTitle={"Update Apppointment"} />
         </div>
     );
 }

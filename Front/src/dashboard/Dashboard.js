@@ -10,7 +10,7 @@ const Dashboard = () => {
         }}>
             <Sidebar />
             <div className="p-2">
-                {/* =<AddForm inputs={bookInputs} title={"Add New Book"} /> */}
+               
              <Outlet />
             </div>
         </div>

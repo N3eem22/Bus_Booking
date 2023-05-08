@@ -4,17 +4,16 @@ import axios from 'axios'
 import Spinner from 'react-bootstrap/Spinner';
 import { getAuthUser } from "../helper/Storage";
 import Alert from 'react-bootstrap/Alert';
-
 const AppointmentsInfo = (props)=>{
    const Auth = getAuthUser();
    const [requestStatus, setRequestStatus] = useState(null);
 
    const handleRequestAppointment = async (e) => {
-      
+      console.log(props.data.image);
          e.preventDefault();
          const token = Auth.token;
          const response = await 
-         axios.post('http://localhost:4000/requestUsers', { appointment_id: props.id }, {
+         axios.post('http://localhost:4000/requestUsers',{ appointment_id: props.id }, {
             headers: {
                token: Auth.token
             }
@@ -22,6 +21,7 @@ const AppointmentsInfo = (props)=>{
 
          setRequestStatus(response.data[0].msg);
          console.log(response);
+         console.log(props);
       }).catch ((err)=> {
          console.error(err);
          setRequestStatus('Failed to request appointment. Please try again later.')});
@@ -30,7 +30,13 @@ const AppointmentsInfo = (props)=>{
 
    return (
       <div className="Appoint-card">
-         <div className="card-top"></div>
+  
+         <div className="card-top">
+                 <img src={props.data.image} alt="Appointment Image" />
+            <div className="id-card">
+               <h4>#{props.id}</h4>
+            </div>
+         </div>
          <div className="card-info">
             <div className="distenations">
                <h4 className="from">from : {props.data.from_location}</h4>
@@ -53,4 +59,4 @@ const AppointmentsInfo = (props)=>{
    );
 };
 
-export default AppointmentsInfo;
+export default AppointmentsInfo

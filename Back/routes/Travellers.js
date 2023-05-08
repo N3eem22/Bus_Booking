@@ -55,7 +55,7 @@ router.get("/:email", async (req, res)=> {
     const {email} = req.params;
  await  connection.query("select * from user where email = ?",email,(err,results,fields)=>{
     if (results[0] ) {
-        res.json(results[0]);
+        res.status(200).json(results[0]);
 
     } else {
 
@@ -69,23 +69,26 @@ router.get("/:email", async (req, res)=> {
   });
 
 //pUT request --> UPDATE User
-router.put("/:email", (req, res) => {
-    const { email } = req.params;
+router.put("/:email",
+body("email").isEmail().withMessage("enter valid email"),
+body("password")  
+  .isLength({ min: 5, max: 12 })
+  .withMessage("password should be between (5,12)character"),
+body("phone")
+  .isLength({ min: 11, max: 11 })
+  .withMessage("This phone number isn't valid"),adminAuth,async (req, res) => {
+  try{
+      const { email } = req.params;
     const { phone, password } = req.body;
-  
-    connection.query(
-      "UPDATE user SET phone = ?, password = ? WHERE email = ?",
-      [phone, password,email],
-      (err, results) => {
-        if (err) {
-          res.statusCode = 500;
-          res.json({ message: "Failed to update Traveler" });
-        } else {
-          res.json("Traveler updated");
-        }
-      }
-    );
-  });
+    const encPassword = await bcrypt.hash(req.body.password, 10);
+   const query = util.promisify(connection.query).bind(connection);
+  await query("UPDATE user SET phone = ?, password = ? WHERE email = ?",[phone, encPassword,email])
+    res.status(200).json({msg:"user updated successfully"})
+  }catch(err){
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 //delete request --> remove spasific User
 router.delete("/:email",(req,res)=>{
     const {email} = req.params;
@@ -103,20 +106,4 @@ router.delete("/:email",(req,res)=>{
    })
 });
 
-
-
 module.exports = router;
-/*
-const movieIndex = Movies.findIndex((item)=>item.id == id);
-    if (movieIndex == -1) {
-        res.statusCode=404;
-        res.send([{
-            "message":"user not found"
-        }]);
-    } else {
-        Movies[movieIndex].name =data.name;
-        Movies[movieIndex].description =data.description;
-        res.json(Movies[movieIndex]);
-
-    }
-*/

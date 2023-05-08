@@ -8,7 +8,7 @@ import axios from 'axios';
 
 const AllAppointments = () => {
   const Auth = getAuthUser();
-
+  const [deleted, setDeleted] = useState(false);
   const [dataState, setDataState] = useState({ // rename state variable to avoid conflict
     loading: false,
     results: [],
@@ -17,23 +17,23 @@ const AllAppointments = () => {
   });
 
   useEffect(() => {
+    
     setDataState({...dataState, loading: true}); // fix typo
     axios.get(`http://localhost:4000/ManageAppointments`, {headers:{
       token: Auth.token,
     }}).then((resp) => {
-      console.log(resp);
+
       setDataState({...dataState, results: resp.data, loading: false, err: null});
     }).catch((err) => {
       setDataState({...dataState, loading: false, err: "Appointment Not Found"});
     })
-  }, []);
+  }, [deleted]);
 
   const columns = [
     {
       name: 'Photo',
       selector: row => (
-        <img src={row.photo} width={70}  />
-      ),
+<img src={row.image} width={70} />      ),
       center: true
     },
     {
@@ -84,9 +84,16 @@ const AllAppointments = () => {
     },
   ];
 
-  const handleDelete = (params) => {
-    setDataState({...dataState, results: dataState.results.filter((item) => item.id !== params.row.id)}); // fix function signature and access row id
-  };
+  const handleDelete = async (param) => {
+    await axios.delete(`http://localhost:4000/ManageAppointments/${param.id}`,{headers:{token:Auth.token}})
+    .then((resp) => {
+        console.log(resp);
+        setDeleted(true);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+};
 
   const updateAppointment = (param) => {
     return (
