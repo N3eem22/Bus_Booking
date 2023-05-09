@@ -27,8 +27,8 @@ router.get("/", async (req, res) => {
   }
 });
 //get spacific appointments => search functioin 
-router.get("/:search", authorized, async (req, res) => {
-  const { search } = req.params;
+router.get("/:search" ,authorized, async (req, res) => {
+  let { search } = req.params;
   const token = req.headers.token;
   const query = util.promisify(connection.query).bind(connection);
 
@@ -37,8 +37,16 @@ router.get("/:search", authorized, async (req, res) => {
     if (!result[0]) {
       res.status(404).json({ msg: "No appointment found" });
     } else {
+
       const emailResult = await query("SELECT email FROM user WHERE token = ?", [token]);
       const email = emailResult[0].email;
+      const fromDes = result[0].from_location;
+      const toDes = result[0].to_location;
+      if (search.includes(fromDes)) {
+        search = fromDes;
+      } else {
+        search = toDes;
+      }
       const searchData = {
         user_email : email,
         search: search
@@ -53,26 +61,32 @@ router.get("/:search", authorized, async (req, res) => {
 });   
 //Add Appointment
 router.post("/", adminAuth,
-upload.single("image"),
-body("from_location").isString().withMessage("please enter a valid location!").isLength({min:4}).withMessage("enter valid location"),
-body("to_location").isString().withMessage("please enter a valid location!").isLength({min:4}).withMessage("enter valid location"),
-body("ticket_price").isLength({max:6}).withMessage("please enter a price!"),
-body("max_num_of_travelers").isLength({max:6}).withMessage("please enter a number of travellers!")
-,body("day").custom(value => {
-  value = value.trim();
-  if (!moment(value, "YYYY/MM/DD", true).isValid()) {
-    throw new Error("Please enter a valid date (YYYY/MM/DD)");
-  }
-  return true;
-}),body("time").custom(value => {
-  if (!moment(value, "HH:mm", true).isValid()) {
-    throw new Error("Please enter a valid time (HH:mm)");
-  }
-  return true;
-}),
+  upload.single("image"),  body("from_location").isString().withMessage("please enter a valid location!").isLength({min:4}).withMessage("enter valid location"),
+  body("to_location").isString().withMessage("please enter a valid location!").isLength({min:4}).withMessage("enter valid location"),
+  body("ticket_price").isLength({max:6}).withMessage("please enter a price!"),
+  body("max_num_of_travelers").isLength({max:6}).withMessage("please enter a number of travellers!"),
+  body("day").custom(value => {
+    value = value.trim();
+    const format = "YYYY/MM/DD HH:mm";
+    const userDateTime = moment(`${value} ${req.body.time}`, format);
+    const currentDateTime = moment();
+    if (!userDateTime.isValid()) {
+      throw new Error(`Invalid date format, please use format: ${format}`);
+    } else if (userDateTime.isBefore(currentDateTime)) {
+      throw new Error("Please enter a future date and time");
+    }
+    return true;
+  }),
+  body("time").custom(value => {
+    if (!moment(value, "HH:mm", true).isValid()) {
+      throw new Error("Please enter a valid time (HH:mm)");
+    }
+    return true;
+  }),
 
 async (req, res) =>{
   try {
+    
   const data = req.body;
   const query = util.promisify(connection.query).bind(connection); 
   //validate Image 
@@ -163,17 +177,15 @@ router.put("/:id", adminAuth, [upload.single("image"),
     await query("UPDATE appointment SET ? WHERE id = ?", [updatedAppointment, id]);
 
     res.json({
-      message: "Appointment updated",
-      updatedAppointment: updatedAppointment,
+      msg: "Appointment updated"
     });
   } catch (err) {
     console.error(err);
     res.status(500).json({
-      message: "Failed to update appointment",
+      msg: "Failed to update appointment",
     });
   }
 });
-  
 //delete request --> remove spasific Appointment
 router.delete("/:id", adminAuth, (req, res) => {
   const { id } = req.params;

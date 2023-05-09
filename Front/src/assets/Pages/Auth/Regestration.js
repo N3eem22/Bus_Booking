@@ -29,14 +29,15 @@ const RegestrationPage = () => {
       (resp)=>{
         setRegister({...register,loading:false ,err:[]})
         setAuthUser(resp.data);
-        navigate("/AppointmentList");
+        navigate("/");
+        console.log(resp.data);
         }
-    ).catch((error) => {
-      console.log(error);
+    ).catch((errors) => {
+      console.log(errors);
       setRegister({
         ...register,
         loading: false,
-        err: error.response.data,
+        err: errors.response.data.errors,
       });
     });
     console.log(register);
@@ -45,9 +46,11 @@ const RegestrationPage = () => {
   
   return (
     <>
-   {
-    register.err.message&& 
-    <Alert variant="danger">{register.err.message} </Alert>}
+  {
+
+  Array.isArray(register.err) && register.err.map((error)=>(
+  <Alert variant="danger">{error.msg}</Alert>
+  ))}
 
       <div className="regetrationContainer">
         <span className="border-line">

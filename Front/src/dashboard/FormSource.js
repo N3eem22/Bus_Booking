@@ -1,4 +1,4 @@
-export const bookInputs = [
+export const appointmentInputs = [
     {
         id: 1,
         label: "From_location",
@@ -31,7 +31,7 @@ export const bookInputs = [
     },
     {
         id: 6,
-        label: " Max_num_of_travelers",
+        label: "Max_num_of_travelers",
         type: "number",
         placeholder: "50",
     },

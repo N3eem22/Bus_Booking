@@ -1,11 +1,11 @@
 import AddForm from "../../components/AddForm";
-import { bookInputs } from "../../FormSource";
+import { appointmentInputs } from "../../FormSource";
 
 const AddAppointment = () => {
 
     return (
         <div>
-            <AddForm inputs={bookInputs} title={"Add New Appoimtment"} />
+            <AddForm inputs={appointmentInputs} title={"Add New Appoimtment"} />
         </div>
     );
 }

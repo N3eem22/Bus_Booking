@@ -8,7 +8,9 @@ import axios from 'axios';
 
 const AllAppointments = () => {
   const Auth = getAuthUser();
-  const [deleted, setDeleted] = useState(false);
+  const [deleted, setDeleted] = useState({
+    reload:0
+});
   const [dataState, setDataState] = useState({ // rename state variable to avoid conflict
     loading: false,
     results: [],
@@ -88,7 +90,7 @@ const AllAppointments = () => {
     await axios.delete(`http://localhost:4000/ManageAppointments/${param.id}`,{headers:{token:Auth.token}})
     .then((resp) => {
         console.log(resp);
-        setDeleted(true);
+        setDeleted({...deleted,reload:deleted.reload+1});
     })
     .catch((err) => {
         console.log(err);
@@ -106,12 +108,14 @@ const AllAppointments = () => {
   };
 
   const deleteAppointment = (param) => {
+    
     return (
       <>
         <button className='deleteBtn' onClick={() => handleDelete(param)}>
           delete
         </button>
       </>
+      
     );
   };
 

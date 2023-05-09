@@ -30,12 +30,12 @@ const AppointmentsInfo = (props)=>{
 
    return (
       <div className="Appoint-card">
-  
-         <div className="card-top">
-                 <img src={props.data.image} alt="Appointment Image" />
-            <div className="id-card">
+   <div className="id-card">
                <h4>#{props.id}</h4>
             </div>
+         <div className="card-top">
+                 <img src={props.data.image} alt="Appointment Image" />
+           
          </div>
          <div className="card-info">
             <div className="distenations">

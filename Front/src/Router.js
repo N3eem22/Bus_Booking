@@ -90,7 +90,7 @@ import UpdateTraveler from "./dashboard/views/Users/UpdateTraveler";
               },
               {
                 path: "update_appointment/:id",
-                loader: UpdateAppointmenyLoader,
+              
                 element: <UpdateAppointment />,
               },
             ],
@@ -127,7 +127,7 @@ import UpdateTraveler from "./dashboard/views/Users/UpdateTraveler";
               },
               {
                 path: "update_request/:id",
-                loader: UpdateAppointmenyLoader,
+             
                 element: <UpdateRequests />,
               },
             ],

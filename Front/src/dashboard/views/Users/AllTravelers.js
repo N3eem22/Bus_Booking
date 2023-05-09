@@ -8,7 +8,9 @@ import UpdateAppointment from '../Appointments/UpdateAppointment';
 
 const AllTravelers =()=>{
     const Auth = getAuthUser();
-    const [deleted, setDeleted] = useState(false);
+    const [deleted, setDeleted] = useState({
+        reload:0
+    });
     const [currUsers,setUsers]=useState({
         loading: false,
         results: [],
@@ -43,6 +45,12 @@ const AllTravelers =()=>{
             selector: row => row.phone,
             sortable: true,
             center: true
+        }, 
+         {
+            name: 'status',
+            selector: row => row.status,
+            sortable: true,
+            center: true
         },
         {
             name: "",
@@ -63,7 +71,7 @@ const AllTravelers =()=>{
         await axios.delete(`http://localhost:4000/adminPage/${param.email}`)
         .then((resp) => {
             console.log(resp);
-            setDeleted(true);
+            setDeleted({...deleted,reload:deleted.reload+1});
         })
         .catch((err) => {
             console.log(err);

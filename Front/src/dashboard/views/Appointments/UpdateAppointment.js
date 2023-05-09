@@ -1,5 +1,5 @@
 import { useLoaderData } from "react-router-dom";
-import { bookInputs } from "../../FormSource";
+import { appointmentInputs } from "../../FormSource";
 import UpdateForm from "../../components/UpdateForm";
 import { findById } from "../../helper/helper";
 
@@ -15,7 +15,7 @@ const UpdateAppointment = () => {
 
     return (
         <div>
-            <UpdateForm  inputs={bookInputs} formTitle={"Update Apppointment"} />
+            <UpdateForm  inputs={appointmentInputs} formTitle={"Update Apppointment"} />
         </div>
     );
 }

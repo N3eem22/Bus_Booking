@@ -2,9 +2,12 @@ import { Link, useNavigate } from "react-router-dom";
 import "../Styles/Header.css";
 import { useState, useEffect } from "react";
 import { getAuthUser, removeAuthUser } from "../helper/Storage";
+import axios from "axios";
 
 const Header = () => {
   const [authenticated, setAuthenticated] = useState(false);
+  const Auth = getAuthUser();
+ const naviagte= useNavigate();
   useEffect(() => {
     const authUser = getAuthUser();
     if (authUser) {
@@ -14,14 +17,24 @@ const Header = () => {
     }
   }, []);
 
-  const logOut = () => {
-    removeAuthUser();
-    setAuthenticated(false);
+  const logOut = async () => {
+    try {
+      const token = Auth.token;
+      await axios.put("http://localhost:4000/auth/logOut", null, {
+        headers: { token },
+      });
+      removeAuthUser();
+      setAuthenticated(false);
+      naviagte("/LoginPage")
+    
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
     <div className="header">
-      <Link to={"AppointmentList"} className="logo">
+      <Link to={"/"} className="logo">
         {" "}
         Bus Booking{" "}
       </Link>
@@ -29,7 +42,7 @@ const Header = () => {
      
       {
         authenticated && (<>
-           <Link to={"/AppointmentList"}>Appointments List</Link>
+           <Link to={"/"}>Appointments List</Link>
         <Link to={"/history"}>History</Link>
         <Link to={"/requestHistory"}>Requests</Link>
         </>
